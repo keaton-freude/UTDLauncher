@@ -1,0 +1,21 @@
+﻿Defines how each network message will be sent
+
+Each seperate command is seperated by a semi-colon ';'
+
+Message1;Message2;Message3;Message4, etc
+
+Each time the server has a chance to answer a message, it will peel the top one off, analyze the contents of the message and respond appropriately
+
+MESSAGE TYPES AND STRUCTURE:
+
+Every single message follows this paradigm:
+
+MessageIdentifier,Content1,Content2,Content3,Content4,etc until one reaches the ending semi colon. This makes it incredibly easy to parse out.
+
+CreateUser
+
+User has submitted a username and password, GUI confirms the info is good. What we will receive is the Username, UserHash and UserSalt that the GUI will generate.
+
+Looks like:
+
+CreateUser,UserName,UserHash,UserSalt;
