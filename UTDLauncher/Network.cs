@@ -13,6 +13,7 @@ namespace UTDLauncher
     {
         private static Network _network;
         public LogInWindow window;
+        public MainWindow mainWindow;
         private TcpClient client;
         IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000);
         NetworkStream clientStream;
@@ -76,18 +77,37 @@ namespace UTDLauncher
             {
                 case "LogonAccepted":
                     Authenticated = true;
+                    Console.WriteLine("Accepted");
                     /* need to report out to window */
-                    window.CheckAuthentication();
+                    window.Dispatcher.Invoke(window.CheckAuthentication);
+                    
+                    //window.CheckAuthentication();
                     break;
                 case "LogonRejected":
                     Authenticated = false;
+                    Console.WriteLine("Rejected");
                     /* Need to report out to window */
-                    window.CheckAuthentication();
+                    window.Dispatcher.Invoke(window.CheckAuthentication);
+                    break;
+                case "RoomCreated":
+                    //System.Action action = new System.Action(mainWindow.CreateRoom);
+
+                    //object[] param = new object[] { new Room(commandParams[1]) };
+                    //mainWindow.Dispatcher.Invoke(mainWindow.CreateRoom, param);
+                    mainWindow.Dispatcher.Invoke(new Action(() => mainWindow.CreateRoom(new Room(commandParams[1]))));
+                    
+                    
                     break;
             }
 
             clientStream.BeginRead(ReceivedBytes, 0, 512, receiveCallback, null);
             
+        }
+
+        public void CreateRoom(string roomName)
+        {
+            string message = "CreateRoom," + roomName + ";";
+            SendMessage(message);
         }
 
         public void CreateUser(string Username, string UserHash, string UserSalt)

@@ -15,6 +15,8 @@ namespace UTDServer
         private Thread listenThread;
         private List<TcpClient> clients;
 
+        public List<Room> Rooms;
+
         public Server()
         {
             this.tcpListener = new TcpListener(IPAddress.Any, 3000);
@@ -22,6 +24,7 @@ namespace UTDServer
             this.listenThread.Start();
             clients = new List<TcpClient>();
             Console.WriteLine("Server Started");
+            Rooms = new List<Room>();
         }
 
         private void ListenForClients()
@@ -105,6 +108,19 @@ namespace UTDServer
                             }
 
                             break;
+                        case "CreateRoom":
+                            commandParams = command.Split(',');
+                            if (CreateRoom(commandParams[1]))
+                            {
+                                /* Send off confirmation to server to add room */
+                                /* Every client needs to know that a new room is available */
+                                Console.WriteLine("Room create successful! Room Name: " + commandParams[1]);
+
+                                byte[] toSend = new Byte[64];
+                                toSend = encoder.GetBytes("RoomCreated," + commandParams[1] + ";");
+                                clientStream.Write(toSend, 0, 13 + commandParams[1].Length);
+                            }
+                            break;
                         default:
                             Console.WriteLine("Packet unhandled. command=" + command);
                             break;
@@ -113,6 +129,21 @@ namespace UTDServer
             }
 
             tcpClient.Close();
+        }
+
+        public bool CreateRoom(string roomName)
+        {
+            if (Rooms.Count != 0)
+            {
+                foreach (Room rm in Rooms)
+                {
+                    if (rm.RoomName == roomName)
+                        return false;
+                }
+            }
+            Rooms.Add(new Room(roomName));
+
+            return true;
         }
     }
 }

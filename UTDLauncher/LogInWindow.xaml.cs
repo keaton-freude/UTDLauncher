@@ -22,6 +22,8 @@ namespace UTDLauncher
     /// </summary>
     public partial class LogInWindow : Window
     {
+        public MainWindow mainWindow;
+
         public LogInWindow()
         {
             InitializeComponent();
@@ -31,7 +33,7 @@ namespace UTDLauncher
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         public void CheckAuthentication()
@@ -39,6 +41,14 @@ namespace UTDLauncher
             if (Network.Instance.Authenticated)
             {
                 MessageBox.Show("Login Successful!", "Success", MessageBoxButton.OK, MessageBoxImage.None);
+
+                txtLogPW.Text = "";
+                txtLogUsername.Text = "";
+
+                mainWindow.IsEnabled = true;
+
+                this.Close();
+
             }
             else
             {
@@ -59,6 +69,12 @@ namespace UTDLauncher
                     //MessageBox.Show("Salt: " + salt + "\nHash: " + hash);
 
                     Network.Instance.CreateUser(txtUsername.Text, hash, salt);
+
+                    txtPassword.Text = "";
+                    txtUsername.Text = "";
+                    txtConfirm.Text = "";
+
+                    MessageBox.Show("Request for account sent to server. Try logging in!");
                     
                 }
                 else

@@ -20,9 +20,19 @@ namespace UTDLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<Room> Rooms;
+
+        public void CreateRoom(Room room)
+        {
+            lstRooms.Items.Add(room);
+        }
+
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Network.Instance.mainWindow = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -31,9 +41,18 @@ namespace UTDLauncher
 
             LogInWindow LogWindow = new LogInWindow();
 
+            LogWindow.mainWindow = this;
+
             LogWindow.Show();
 
             this.IsEnabled = false;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string RoomName = txtCreateRoomName.Text;
+
+            Network.Instance.CreateRoom(RoomName);
         }
     }
 }

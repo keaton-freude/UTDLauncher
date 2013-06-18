@@ -1,8 +1,12 @@
 ﻿<Window x:Class="UTDLauncher.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+        Title="MainWindow" Height="594.876" Width="1018.463" Loaded="Window_Loaded">
     <Grid>
-        
+        <Label Content="UNITY TOWER DEFENSE LAUNCHER" HorizontalAlignment="Center" Margin="229,22,199,0" VerticalAlignment="Top" FontSize="36" Width="582"/>
+        <TextBox x:Name="txtCreateRoomName" HorizontalAlignment="Left" Height="23" Margin="73,194,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Create Room" HorizontalAlignment="Left" Margin="73,222,0,0" VerticalAlignment="Top" Width="120" Click="Button_Click_1"/>
+        <ListBox x:Name="lstRooms" HorizontalAlignment="Left" Height="185" Margin="731,217,0,0" VerticalAlignment="Top" Width="219"/>
+
     </Grid>
 </Window>

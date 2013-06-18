@@ -19,3 +19,12 @@ User has submitted a username and password, GUI confirms the info is good. What 
 Looks like:
 
 CreateUser,UserName,UserHash,UserSalt;
+
+
+Create Room
+
+User has submitted a RoomName and a request to create a room
+
+Looks Like:
+
+CreateRoom,RoomName;
