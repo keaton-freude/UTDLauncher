@@ -55,8 +55,6 @@ namespace UTDServer
                 try
                 {
                     bytesRead = clientStream.Read(message, 0, 4096);
-
-
                 }
                 catch
                 {
@@ -65,6 +63,7 @@ namespace UTDServer
 
                 if (bytesRead == 0)
                 {
+                    Console.WriteLine("No data read, socket ending");
                     break;
                 }
 

@@ -50,12 +50,6 @@ namespace UTDLauncher
             /* Get the result, save out to string, then append to our list of commands */
             string data = encoder.GetString(ReceivedBytes);
 
-
-
-            
-
-            //data.Trim(
-
             CommandList += data.TrimEnd(new char[] { '\0' });
 
             /* Now we need to decide what we need to do */
@@ -90,10 +84,6 @@ namespace UTDLauncher
                     window.Dispatcher.Invoke(window.CheckAuthentication);
                     break;
                 case "RoomCreated":
-                    //System.Action action = new System.Action(mainWindow.CreateRoom);
-
-                    //object[] param = new object[] { new Room(commandParams[1]) };
-                    //mainWindow.Dispatcher.Invoke(mainWindow.CreateRoom, param);
                     mainWindow.Dispatcher.Invoke(new Action(() => mainWindow.CreateRoom(new Room(commandParams[1]))));
                     
                     
@@ -113,7 +103,6 @@ namespace UTDLauncher
         public void CreateUser(string Username, string UserHash, string UserSalt)
         {
             string message = "CreateUser," + Username + "," + UserHash + "," + UserSalt + ";";
-            //Encodin
             SendMessage(message);
         }
 
